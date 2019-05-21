@@ -42,6 +42,7 @@ git clone https://github.com/Meituan-Dianping/SQLAdvisor.git
 ### 2. SQLAdvisor使用
 #### 2.1 --help输出
 ```
+# 1.帮助
 ./sqladvisor --help
 Usage:
   sqladvisor [OPTION...] sqladvisor
@@ -52,24 +53,28 @@ Help Options:
   -?, --help              Show help options
 
 Application Options:
-  -f, --defaults-file     sqls file
-  -u, --username          username
-  -p, --password          password
-  -P, --port              port
-  -h, --host              host
-  -d, --dbname            database name
-  -q, --sqls              sqls
+  -f, --defaults-file     sqls file（sql文件）
+  -u, --username          username（用户名）
+  -p, --password          password（密码）
+  -P, --port              port（端口）
+  -h, --host              host（ip地址）
+  -d, --dbname            database name（数据库名）
+  -q, --sqls              sqls（sql语句，以;分隔）
   -v, --verbose           1:output logs 0:output nothing
 ```
 #### 2.2 命令行传参调用
 ```
-./sqladvisor -h xx  -P xx  -u xx -p 'xx' -d xx -q "sql" -v 1
+# 2.命令使用（命令行传参时，参数名与值需要用空格隔开）
+sqladvisor -h ip地址 -P 端口 -u 用户名 -p '密码' -d 数据库名 -q "sql语句" -v 1
 ```
 #####注意：命令行传参时，参数名与值需要用空格隔开
 
 #### 2.3 配置文件传参调用
 
 ```
+# 3.配置文件使用
+sqladvisor -f sql.cnf  -v 1
+
 $> cat sql.cnf
 [sqladvisor]
 username=xx
@@ -78,6 +83,11 @@ host=xx
 port=xx
 dbname=xx
 sqls=sql1;sql2;sql3....
-
-cmd: ./sqladvisor -f sql.cnf  -v 1
 ```
+
+#### 3.注意
+SQL中的子查询、or条件、使用函数的条件 会忽略不处理
+命令行传入sql参数时，注意sql中的双引号、反引号等都需要用\转义。建议使用配置文件形式调用
+
+架构图：
+![jpg](https://awps-assets.meituan.net/mit-x/blog-images-bundle-2017/2b8b7d7a.jpg)
